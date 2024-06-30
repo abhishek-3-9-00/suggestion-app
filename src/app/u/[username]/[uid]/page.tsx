@@ -21,7 +21,7 @@ import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import * as z from "zod";
 
-const page = () => {
+const Page = () => {
   const router = useRouter();
   const { username, uid } = useParams();
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -86,7 +86,7 @@ const page = () => {
       }
     };
     checkUsername();
-  }, []);
+  }, [username]);
 
   if (!isUserGenuine)
     return (
@@ -149,4 +149,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;
