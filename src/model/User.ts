@@ -25,7 +25,6 @@ const generateUid = (): string => {
   for (let i = 0; i < 12; i++) {
     uid += alphanumeric.charAt(Math.floor(Math.random() * alphanumeric.length));
   }
-  console.log("UUUUIIIDDD",uid)
   return uid;
 };
 
