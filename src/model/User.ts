@@ -1,6 +1,7 @@
 import mongoose, { Schema, Document } from "mongoose";
 
 export interface Message extends Document {
+  _id: string;
   content: string;
   createdAt: Date;
 }
@@ -17,6 +18,17 @@ const MessageSchema: Schema<Message> = new Schema({
   },
 });
 
+const generateUid = (): string => {
+  const alphanumeric =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+  let uid = "";
+  for (let i = 0; i < 12; i++) {
+    uid += alphanumeric.charAt(Math.floor(Math.random() * alphanumeric.length));
+  }
+  console.log("UUUUIIIDDD",uid)
+  return uid;
+};
+
 export interface User extends Document {
   username: string;
   email: string;
@@ -26,6 +38,7 @@ export interface User extends Document {
   isVerified: boolean;
   isAcceptingMessage: boolean;
   messages: Message[];
+  uid: any;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -62,8 +75,16 @@ const UserSchema: Schema<User> = new Schema({
     default: true,
   },
   messages: [MessageSchema],
+  uid: {
+    type: String,
+    required: true,
+    unique: true,
+    default: generateUid(),
+  },
 });
 
 const UserModel =
   (mongoose.models.User as mongoose.Model<User>) ||
   mongoose.model<User>("User", UserSchema);
+
+export default UserModel;
