@@ -47,8 +47,15 @@ const Page = () => {
         identifier: data.identifier,
         password: data.password,
       });
+      console.log(response);
       if (response?.url) {
         router.replace("/dashboard");
+      }
+      if (response?.error) {
+        toast({
+          title: "Login Failed : Re-Register",
+          description: response?.error,
+        });
       }
     } catch (error) {
       toast({

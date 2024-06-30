@@ -5,10 +5,15 @@ import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
 import { User } from "next-auth";
 import { Button } from "./ui/button";
+import { useRouter } from "next/navigation";
 
 const Navbar = () => {
   const { data: session } = useSession();
+  const router = useRouter();
   const user: User = session?.user as User;
+  const onMessageClick = () => {
+    router.push("/");
+  };
 
   return (
     <nav className="p-4 md:p-6 shadow-md">
@@ -18,7 +23,10 @@ const Navbar = () => {
             <source src="/Message.mp4" type="video/mp4" />
             Your browser does not support the video tag.
           </video>
-          <a href={`${window.location.protocol}//${window.location.host}`} className="text-xl font-bold mb-4 md:mb-0">
+          <a
+            onClick={onMessageClick}
+            className="text-xl font-bold mb-4 md:mb-0"
+          >
             Message Center
           </a>
         </div>

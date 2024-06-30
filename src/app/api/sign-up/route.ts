@@ -2,6 +2,7 @@ import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
 import bcrypt from "bcryptjs";
 import { sendVerificationEmail } from "@/helpers/sendVerificationEmail";
+import { v4 as uuidv4 } from "uuid";
 
 export async function POST(request: Request) {
   await dbConnect();
@@ -24,7 +25,6 @@ export async function POST(request: Request) {
       email,
     });
     const verifiedCode = Math.floor(100000 + Math.random() * 900000).toString();
-    debugger;
     if (existingUserbyEmail) {
       if (existingUserbyEmail.isVerified) {
         return Response.json(
@@ -54,6 +54,7 @@ export async function POST(request: Request) {
         isVerified: false,
         isAcceptingMessage: true,
         messages: [],
+        uid: uuidv4(),
       });
       await newUser.save();
     }
